@@ -1,0 +1,74 @@
+# please configure your env inside ~/.pam_environment 
+
+alias ne='emacs'
+alias sp='systemctl suspend'
+
+retry () {
+  while ! "$@"; do
+    sleep 1
+  done
+}
+
+moche () {
+    local port="${2:-22}"
+    local host="${1:?missing host}"
+    mosh --ssh="ssh -p $port" "$host"
+}
+
+setclip () {
+    xclip -selection c
+}
+
+getclip () {
+    xclip -selection c -o
+}
+
+ecc () {
+  gcc -Wall -Wextra -std=c99 -pedantic \
+  -Wfloat-equal -Wundef -Wshadow -Wpointer-arith \
+  -Wbad-function-cast -Wcast-qual -Wcast-align \
+  -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes \
+  -Wmissing-declarations -Wnested-externs \
+  -Wunreachable-code -Wwrite-strings "$@"
+}
+
+ivalgrind () {
+  valgrind --leak-check=full        \
+           --show-leak-kinds=all    \
+	   --track-origins=yes "$@"
+}
+
+gecc () {
+  ecc -g -ggdb -gdwarf-3 "$@"
+}
+
+upload () {
+  curl -sSLT "$1" chunk.io
+}
+
+dig () {
+  echo ">> Please update your brain to drill <<" >&2
+  drill "$@"
+}
+
+rep () {
+  local times="$1"
+  local char="${2:-A}"
+  printf "%${times}s" | tr ' ' "${char}" 
+}
+
+alias pad=rep
+
+bruijn_gen () {
+  ragg2 -P "${1:-1024}" | rax2 -s -
+}
+
+bruijn_anal () {
+   r2 -qc "wopO ${1:?missing de bruijn offset}" --
+}
+
+meh () {
+  echo '¯\_(ツ)_/¯'
+}
+
+alias pgg='systemctl --user restart zerauth'
