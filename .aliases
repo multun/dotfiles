@@ -1,6 +1,6 @@
 # please configure your env inside ~/.pam_environment 
 
-alias ne='emacs'
+alias ne='emacs -nw'
 alias sp='systemctl suspend'
 
 retry () {
